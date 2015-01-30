@@ -11,19 +11,25 @@
  */
 
 function Spell (name, cost, description) {
-   this.name = name;
-   this.cost = cost;
-   this.description = description;
+  this.name = name;
+  this.cost = cost;
+  this.description = description;
 }
 
-Spell.prototype.printDetails = function () {
-   return console.log('Name: ' + this.name + '\n' + 'Cost: ' + this.cost + '\n' + 'Desc: ' + this.description + '\n');
-};
   /**
    * Print out all spell details and format it nicely.
    * The format doesnt matter, as long as it contains the spell name, cost, and description.
    * @name printDetails
    */
+
+Spell.prototype.printDetails = function () {
+  var resString = '';
+  return console.log(
+    'Name: ' + this.name + '\n' + 
+    'Cost: ' + this.cost + '\n' + 
+    'Desc: ' + this.description + '\n'
+  );
+};
 
 /**
  * A spell that deals damage.
@@ -50,6 +56,29 @@ Spell.prototype.printDetails = function () {
  * @property {string} description
  */
 
+ function DamageSpell (name, cost, damage, description) {
+  
+  this.damage = damage;
+  
+  Spell.call(this, name, cost, description);
+
+ }
+
+DamageSpell.prototype = Object.create(
+  Spell.prototype, {
+    constructor: { value: Spell }
+  }
+);
+
+DamageSpell.prototype.printDetails = function () {
+  return console.log(
+    'Name: '   + this.name + '\n' + 
+    'Cost: '   + this.cost + '\n' + 
+    'Damage: ' + this.damage + '\n' + 
+    'Desc: '   + this.description + '\n'
+  );
+};
+
 /**
  * Now that you've created some spells, let's create
  * `Spellcaster` objects that can use them!
@@ -63,6 +92,13 @@ Spell.prototype.printDetails = function () {
  * @property {mana} mana
  * @property {boolean} isAlive  Default value should be `true`.
  */
+
+function Spellcaster (name, health, mana) {
+  this.name = name;
+  this.health = health;
+  this.mana =  mana;
+  this.isAlive = true;
+}
 
   /**
    * The spellcaster loses health equal to `damage`.
