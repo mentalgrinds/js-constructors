@@ -111,8 +111,11 @@ function Spellcaster (name, health, mana) {
    */
 Spellcaster.prototype.inflictDamage = function (damage) {
   this.health -= damage;
-  if (this.health < 0) { this.health = 0;}
-  if (this.health === 0) { this.isAlive = false; }
+
+  if (this.health <= 0 ) {
+    this.health = 0;
+    this.isAlive = false;
+  }
 };
 
   /**
