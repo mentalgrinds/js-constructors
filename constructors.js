@@ -10,6 +10,15 @@
  * @property {string} description
  */
 
+function Spell (name, cost, description) {
+   this.name = name;
+   this.cost = cost;
+   this.description = description;
+}
+
+Spell.prototype.printDetails = function () {
+   return console.log('Name: ' + this.name + '\n' + 'Cost: ' + this.cost + '\n' + 'Desc: ' + this.description + '\n');
+};
   /**
    * Print out all spell details and format it nicely.
    * The format doesnt matter, as long as it contains the spell name, cost, and description.
