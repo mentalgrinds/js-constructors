@@ -109,6 +109,11 @@ function Spellcaster (name, health, mana) {
    * @name inflictDamage
    * @param  {number} damage  Amount of damage to deal to the spellcaster
    */
+Spellcaster.prototype.inflictDamage = function (damage) {
+  this.health -= damage;
+  if (this.health < 0) { this.health = 0;}
+  if (this.health === 0) { this.isAlive = false; }
+};
 
   /**
    * Reduces the spellcaster's mana by `cost`.
