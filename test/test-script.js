@@ -263,3 +263,107 @@ describe('Spellcaster', function() {
   });
 
 });
+
+describe("FireSpellcaster", function() {
+
+  it('should be a function', function() {
+    expect(FireSpellcaster).to.be.a('function');
+  });
+
+  describe("instance object", function() {
+    it('should have a name', function() {
+      var blaze = new FireSpellcaster('Blaze', 300, 125);
+      expect(blaze.name).to.be.a('string');
+      blaze.name.should.equal('Blaze');
+    });
+
+    it('should have health', function() {
+      var bob = new FireSpellcaster('Bob', 300, 125);
+      expect(bob.health).to.be.a('number');
+      bob.health.should.at.least(1);
+    });
+
+    it('should have mana', function() {
+      var chuck = new FireSpellcaster('Chuck', 300, 125);
+      expect(chuck.mana).to.be.a('number');
+      chuck.mana.should.at.least(1);
+    });
+
+    it('should be alive', function() {
+      var diane = new FireSpellcaster('Diane', 300, 125);
+      expect(diane.isAlive).to.be.a('boolean');
+      diane.isAlive.should.be.true;
+    });
+
+    it("should have a double damage threshold ", function() {
+      var crispy = new FireSpellcaster('Crispy', 300, 125);
+      expect(crispy.doubleDamageThreshold).to.be.a('number');
+      crispy.doubleDamageThreshold.should.equal(150);
+    });
+
+    describe('.inflictDamage', function() {
+
+      it ('should be a function', function() {
+        var edward = new FireSpellcaster('Edward', 300, 125);
+        expect(edward.inflictDamage).to.be.a('function');
+      });
+
+      it('should be able to take damage', function() {
+        var fred = new FireSpellcaster('Fred', 300, 125),
+            fullHealth = fred.health;
+        fred.inflictDamage(fred.health - 1);
+        fred.health.should.be.below(fullHealth);
+      });
+
+      it('should be able to deal lethal damage', function() {
+        var greg = new FireSpellcaster('Greg', 300, 125);
+        greg.inflictDamage(greg.health);
+        greg.isAlive.should.be.false; // 1hp
+      });
+
+      it('should never take health below zero', function() {
+        var henry = new FireSpellcaster('Henry', 300, 125);
+        henry.inflictDamage(henry.health + 1);
+        henry.health.should.equal(0);
+        henry.isAlive.should.be.false; // 0hp
+      });
+
+      it("should take double damage when health is < 50%", function() {
+        var charles = new FireSpellcaster('Charles', 400, 200);
+        charles.inflictDamage((charles.health / 2) +2);
+        charles.inflictDamage(50);
+        charles.health.should.equal(98);
+      });
+    });
+
+    describe('.spendMana', function() {
+      it('should be a function', function() {
+        var iris = new FireSpellcaster('Iris', 300, 125);
+        expect(iris.spendMana).to.be.a('function');
+      });
+
+      it("should cost 1/2 to cast spells", function() {
+        var vic = new FireSpellcaster('Vic', 400, 200);
+        vic.spendMana(vic.mana);
+        vic.mana.should.be.equal(100);
+      });
+
+      it('should be able to spend mana if it has enough', function() {
+        var jane = new FireSpellcaster('Jane', 300, 125),
+            fullMana = jane.mana;
+        expect(jane.spendMana((jane.mana * 2) - 1)).to.be.true;
+        jane.mana.should.be.below(fullMana);
+      });
+
+      it('should not be able to spend more mana than the current amount', function() {
+        var karl = new FireSpellcaster('Karl', 300, 125);
+        var totalMana = karl.mana;
+        expect(karl.spendMana((karl.mana * 2) + 1)).to.be.false;
+        karl.mana.should.equal(totalMana);
+      });
+    });
+
+    
+  });
+  
+});

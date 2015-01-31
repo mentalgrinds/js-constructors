@@ -180,3 +180,47 @@ Spellcaster.prototype.invoke = function (spell, target) {
     return false;
   }
 };
+
+
+/**
+ *  Fire Spellcaster
+ */
+
+
+ // if a FireSpellcaster health < 50 double damage
+ // 
+
+function FireSpellcaster (name, health, mana) {
+  this.doubleDamageThreshold = health * 0.5; 
+  
+  Spellcaster.call(this, name, health, mana);
+}
+
+FireSpellcaster.prototype = Object.create(
+  Spellcaster.prototype, {
+    constructor: { value: Spellcaster }
+  }
+);
+
+FireSpellcaster.prototype.inflictDamage = function (damage) {
+
+  if (this.health < this.doubleDamageThreshold) {
+    damage *= 2;
+  }
+  this.health -= damage;
+
+  if (this.health <= 0 ) {
+    this.health = 0;
+    this.isAlive = false;
+  }
+};
+
+FireSpellcaster.prototype.spendMana = function (cost) {
+  cost /= 2;
+  if (this.mana >= cost) {
+    this.mana -= cost;
+    return true;
+  } else {
+    return false;
+  }
+};
