@@ -16,33 +16,10 @@ spellBook.push( new DamageSpell('Lightning Blast', 40, 221, 'Deals moderate-heav
 spellBook.push( new DamageSpell('Decree of Annihilation', 99, 600, 'Deals massive non-elemental damage.'));
 spellBook.push( new DamageSpell('Staff whack', 0, 27, 'Whack an enemy with a staff.'));
 
-var lastAttacker =  0;
 
+var playTurns = new Turns(wizards, spellBook);
 
+console.log(playTurns);
 
+playTurns.play();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var testCounter = 6;
-
-while (testCounter) {
-  var turn = new Turn(wizards, spellBook);
-  console.log(turn);
-  testCounter--;
-}
