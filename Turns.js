@@ -8,8 +8,12 @@ function Turns (wizardArr, spellArr) {
 
 Turns.prototype.play = function () {
 
-  while (this.wizardList.length > 2) {
+  var testCycles = 10;
+  while (testCycles) {
+    console.log('before new Turn. cycle:', testCycles);
     var turn = new Turn(this);
+    console.log('after new Turn.');
+    testCycles--;
   }
 
   this.turnsStack.forEach(function (turnElement) {

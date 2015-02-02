@@ -38,11 +38,10 @@ Turn.prototype.determineOwner = function (lastAttacker) {
 };
 
 Turn.prototype.determineTarget = function (owner) {
-  var target = this.wizLst[this.getRndIndex(this.wizLst.length)];
-
-  while (owner == target) {
-    this.determineTarget(owner);
-  }
+  var ownerIndex = this.wizLst.indexOf(owner);
+  var ownerlessWizardList = this.wizLst.slice(ownerIndex, ownerIndex + 1);
+  var target = ownerlessWizardList[this.getRndIndex(ownerlessWizardList.length)];
+  
   return target;
 };
 
@@ -53,6 +52,7 @@ Turn.prototype.selectSpell = function () {
 Turn.prototype.resolveAttack = function () {
   if (this.owner && this.action && this.target) {
     this.owner.invoke(this.action, this.target);
+    console.log(this.target.name, 'health ', this.target.health);
     var outcome = '';
     if (this.target.isAlive) {
       outcome = outcome.concat(this.owner.name);
